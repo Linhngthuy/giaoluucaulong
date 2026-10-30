@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký Giao Lưu Cầu Lông</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #f8fafc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <!-- Header -->
+    <header class="p-4 bg-slate-900/80 backdrop-blur border-b border-slate-800 flex justify-between items-center max-w-xl mx-auto w-full">
+        <div class="flex items-center space-x-2">
+            <div class="bg-green-500 text-slate-950 p-2 rounded-xl font-bold">
+                <i class="fa-solid fa-shuttlecock text-xl"></i>
+            </div>
+            <div>
+                <h1 class="font-bold text-lg leading-tight">Cầu Lông Giao Lưu</h1>
+                <p class="text-xs text-slate-400">Vui khỏe - Kết nối đam mê</p>
+            </div>
+        </div>
+        <button onclick="openConfigModal()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-2 rounded-lg border border-slate-700 transition flex items-center gap-1.5">
+            <i class="fa-solid fa-gear"></i> Cấu hình Zalo
+        </button>
+    </header>
+
+    <!-- Main Form -->
+    <main class="max-w-xl mx-auto w-full p-4 my-auto">
+        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-2xl">
+            <div class="text-center mb-6">
+                <h2 class="text-xl font-bold text-green-400">Đăng Ký Tham Gia Sân</h2>
+                <p class="text-sm text-slate-400 mt-1">Điền thông tin bên dưới để vào nhóm Zalo giao lưu nhé!</p>
+            </div>
+
+            <form id="registerForm" onsubmit="handleSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1">Họ và tên của bạn</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500"><i class="fa-solid fa-user"></i></span>
+                        <input type="text" id="name" required placeholder="Ví dụ: Nguyễn Văn A" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 pl-10 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-green-500 transition">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1">Số điện thoại (Zalo)</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500"><i class="fa-solid fa-phone"></i></span>
+                        <input type="tel" id="phone" required placeholder="Ví dụ: 0912345678" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 pl-10 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-green-500 transition">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1">Trình độ hiện tại</label>
+                    <select id="level" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-green-500 transition">
+                        <option value="Yếu / Mới chơi">Mới chơi / Đang tập đánh</option>
+                        <option value="Trung bình yếu">Trung bình yếu</option>
+                        <option value="Trung bình" selected>Trung bình (Đánh được cơ bản)</option>
+                        <option value="Khá">Khá (Đánh tốt, di chuyển nhanh)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1">Buổi muốn tham gia</label>
+                    <input type="text" id="session" placeholder="Ví dụ: Tối thứ 3 (18h - 20h)" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-green-500 transition">
+                </div>
+
+                <button type="submit" class="w-full bg-green-500 hover:bg-green-400 text-slate-950 font-bold py-3.5 rounded-xl transition shadow-lg shadow-green-500/20 flex items-center justify-center gap-2 text-base">
+                    <span>Xác Nhận Đăng Ký</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <!-- Modal Cấu hình Zalo -->
+    <div id="configModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl">
+            <h3 class="text-lg font-bold text-green-400 mb-2">Cài Đặt Liên Kết Zalo</h3>
+            <p class="text-xs text-slate-400 mb-4">Nhập Link nhóm Zalo hoặc Số điện thoại Zalo cá nhân của bạn để khi khách đăng ký xong sẽ tự động chuyển hướng đến đó.</p>
+            
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Link nhóm Zalo hoặc SĐT Zalo</label>
+                    <input type="text" id="zaloLinkInput" placeholder="https://zalo.me/g/xxxxxx hoặc 0912345678" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-green-500">
+                </div>
+                <div class="flex gap-2 pt-2">
+                    <button onclick="saveZaloConfig()" class="flex-1 bg-green-500 hover:bg-green-400 text-slate-950 font-bold py-2.5 rounded-xl text-sm transition">Lưu Lại</button>
+                    <button onclick="closeConfigModal()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold py-2.5 rounded-xl text-sm transition">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center py-4 text-xs text-slate-500">
+        Phát triển bởi Cầu Lông Giao Lưu &bull; Miễn phí & Tiện lợi
+    </footer>
+
+    <!-- Script xử lý logic -->
+    <script>
+        // Mặc định link Zalo (bạn có thể đổi trực tiếp ở đây hoặc dùng nút Cấu hình trên web)
+        let zaloTarget = localStorage.getItem('zalo_target') || 'https://zalo.me/g/nhomcaultrongcuaanh';
+
+        function openConfigModal() {
+            document.getElementById('zaloLinkInput').value = zaloTarget.includes('http') ? zaloTarget : zaloTarget;
+            document.getElementById('configModal').classList.remove('hidden');
+            document.getElementById('configModal').classList.add('flex');
+        }
+
+        function closeConfigModal() {
+            document.getElementById('configModal').classList.remove('flex');
+            document.getElementById('configModal').classList.add('hidden');
+        }
+
+        function saveZaloConfig() {
+            let val = document.getElementById('zaloLinkInput').value.trim();
+            if (val) {
+                // Nếu người dùng nhập số điện thoại thay vì link
+                if (/^\d+$/.test(val)) {
+                    zaloTarget = `https://zalo.me/${val}`;
+                } else {
+                    zaloTarget = val;
+                }
+                localStorage.setItem('zalo_target', zaloTarget);
+                alert('Đã lưu cấu hình Zalo thành công!');
+                closeConfigModal();
+            } else {
+                alert('Vui lòng nhập link hoặc số điện thoại!');
+            }
+        }
+
+        function handleSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const level = document.getElementById('level').value;
+            const session = document.getElementById('session').value;
+
+            // Thông báo thành công và chuyển hướng sang Zalo
+            alert(`Cảm ơn bạn ${name} đã đăng ký thành công!\nTrang web sẽ chuyển bạn vào nhóm Zalo ngay bây giờ.`);
+            
+            // Mở link Zalo trong tab mới hoặc chuyển hướng
+            window.location.href = zaloTarget;
+        }
+    </script>
+</body>
+</html>
